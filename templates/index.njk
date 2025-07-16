@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>App</title>
+    <script>
+        document.addEventListener('namespace.ready', e => e.detail('test test'));
+    </script>
 </head>
 <body>
 <div id="app"></div>
@@ -12,5 +15,7 @@
 {% else %}
     <script type="module" src="/dist/frontend/index.js"></script>
 {% endif %}
+
+    <my-autocomplete locale="en_GB"></my-autocomplete>
 </body>
 </html>

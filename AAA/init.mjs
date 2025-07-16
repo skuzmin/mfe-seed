@@ -5,7 +5,7 @@ import { basename } from 'node:path';
 import { chdir } from 'node:process';
 import bootstrap from './setup.mjs';
 
-// npx @tui/mfe-tools my-mfe git@ssh.source.tui:cr/tuicom/templates/my-mfe.git
+// npx mfe-tools my-mfe git@ssh.source.aaa:cr/aaa/templates/my-mfe.git
 
 if (process.argv.length >= 5) {
     console.warn('Second parameter is now removed. Usage: \nnpx mfe-blueprint-generator [repo]');

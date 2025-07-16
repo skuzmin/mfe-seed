@@ -11,14 +11,10 @@ const REPLACE_CLASS_NAME = 'MfeBlueprintLean';
 const CUSTOM_ELEMENT_REGEX =
     /^[a-z](?:[\-\.0-9_a-z\xB7\xC0-\xD6\xD8-\xF6\xF8-\u037D\u037F-\u1FFF\u200C\u200D\u203F\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]|[\uD800-\uDB7F][\uDC00-\uDFFF])*-(?:[\-\.0-9_a-z\xB7\xC0-\xD6\xD8-\xF6\xF8-\u037D\u037F-\u1FFF\u200C\u200D\u203F\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]|[\uD800-\uDB7F][\uDC00-\uDFFF])*$/;
 const WELL_KNOWN_TEAMS = [
-    { title: 'TUI.com Checkout Pod', value: { team: 'checkout', email: 'tuicom-checkout-pod@tui.com' } },
-    { title: 'TUI.com Discover Pod', value: { team: 'discover', email: 'tuicom-discover-pod@tui.com' } },
-    { title: 'TUI.com MMB Pod', value: { team: 'mmb', email: 'tuicom-mmb-pod@tui.com' } },
-    { title: 'TUI.com Search Pod', value: { team: 'search', email: 'tuicom-search-pod@tui.com' } },
-    { title: 'TUI.com Product Pod', value: { team: 'product', email: 'tuicom-product-pod@tui.com' } },
+    { title: 'TITLE', value: { team: 'checkout', email: 'EMAIL' } },
 ];
 const WELL_KNOWN_BUSINESS_UNIT = 'sales';
-const WELL_KNOWN_SUB_UNIT = 'tuicom';
+const WELL_KNOWN_SUB_UNIT = 'aaa';
 const WELL_KNOWN_REGION = 'cr';
 
 const WELL_KNOWN_TEMPLATES = [
@@ -33,7 +29,7 @@ const getGitInfo = () => {
     const gitInfo = fs.readFileSync('.git/config').toString();
     gitInfo.split('\n').map((line) => {
         if (line.trim().startsWith('url = ')) {
-            suggestRepo = line.trim().replace('url = ', '').replace('git@ssh.source.tui:', 'https://source.tui/');
+            suggestRepo = line.trim().replace('url = ', '').replace('git@ssh.source.aaa:', 'https://source.aaa/');
             suggestName = suggestRepo.substring(suggestRepo.lastIndexOf('/') + 1, suggestRepo.lastIndexOf('.git'));
         }
     });
@@ -171,7 +167,7 @@ export default async () => {
                 subUnit = await prompt({
                     type: 'text',
                     name: 'value',
-                    message: 'Provide your Sub Unit as of LeanIX or your AWS Tags: (eg. tuicom, book) (kebab-case, lowercase)',
+                    message: 'Provide your Sub Unit as of LeanIX or your AWS Tags: (eg. aaacom, book) (kebab-case, lowercase)',
                     validate: validateKebabCase,
                     initial: subUnit,
                 });
@@ -283,7 +279,7 @@ export default async () => {
     const className = readableName.replaceAll(' ', '');
 
     // Generate the ssh link to the git repo
-    const repoSSH = repo.replace('https://source.tui/', 'git@ssh.source.tui:');
+    const repoSSH = repo.replace('https://source.aaa/', 'git@ssh.source.aaa:');
 
     ///////////////////////////////////////////////////////////////////
     //////////////////// 2. replace repositories //////////////////////
@@ -293,8 +289,8 @@ export default async () => {
     const repoReplace = ['./cloudformation.yml', './src/manifest.yaml', './package.json', './README.md'];
 
     repoReplace.forEach((file) => {
-        updateFile(file, 'https://source.tui/cr/tuicom/templates/mfe-blueprint-lean.git', repo);
-        updateFile(file, 'git@ssh.source.tui:cr/tuicom/templates/mfe-blueprint-lean.git', repoSSH);
+        updateFile(file, 'https://source.aaa/cr/aaacom/templates/mfe-blueprint-lean.git', repo);
+        updateFile(file, 'git@ssh.source.aaa:cr/aaacom/templates/mfe-blueprint-lean.git', repoSSH);
     });
 
     ///////////////////////////////////////////////////////////////////
@@ -361,7 +357,7 @@ export default async () => {
         ],
         [/namespace:.$/im, `namespace: ${businessUnit === 'osp' ? 'osp' : region}`],
         [`owner: 'platform'`, `owner: '${team}'`],
-        [`system: tui.com`, subUnit === WELL_KNOWN_SUB_UNIT ? `system: tui.com` : `system: ${businessUnit}`],
+        [`system: aaa.com`, subUnit === WELL_KNOWN_SUB_UNIT ? `system: aaa.com` : `system: ${businessUnit}`],
     ]);
     // );
     updateFile('./.gitlab-ci.yml', [
