@@ -1,15 +1,26 @@
-import {defineConfig} from 'vite';
+import {defineConfig, loadEnv} from 'vite';
 import seedServ from './seed-plugin.js';
 
 export default defineConfig(({mode}) => {
+    const env = loadEnv(mode, 'src', '');
     const rootConfig = 'src';
+
+    const cssConfig = {
+        preprocessorOptions: {
+            scss: {
+                additionalData: `
+                    $namespace: '${env.VITE_MFE_NAME}';
+                `,
+            },
+        },
+    };
 
     return {
         root: rootConfig,
         server: {
             port: 7000,
         },
-        // css: cssConfig,
+        css: cssConfig,
         // test: testConfig,
         build: {
             outDir: '../dist/frontend',

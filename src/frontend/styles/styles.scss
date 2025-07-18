@@ -2,12 +2,56 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-size: 16px;
 }
 
-.success {
-  color: green;
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --primary-color: #007bff;
+  --error-color: #dc3545;
+}
+
+[data-theme="dark"] {
+  --bg-color: #1e1e1e;
+  --text-color: #f1f1f1;
+  --primary-color: #0d6efd;
+  --error-color: #dc3545;
 }
 
 .fallback-error-message {
-  color: red;
+  color: var(--error-color);
+}
+
+.#{$namespace} {
+  &-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  &-title {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  &-image {
+    height: 100%;
+    width: 100%;
+    max-height: 480px;
+    max-width: 640px;
+  }
+  &-btn {
+    height: 2rem;
+    width: 50%;
+    text-align: center;
+    padding: 0.5rem;
+    box-shadow: none;
+    border: none;
+    cursor: pointer;
+    background-color: #c6c6c6;
+    &:hover {
+      background-color: #a69797;
+    }
+  }
 }

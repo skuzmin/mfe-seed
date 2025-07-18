@@ -21,7 +21,7 @@ export default function seedServ() {
                     headers: req.headers,
                 });
                 const response = await app.fetch(request);
-                if (response.status === 404) {
+                if (!response.ok) {
                     next();
                     return;
                 }

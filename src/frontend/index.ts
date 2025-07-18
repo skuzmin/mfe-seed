@@ -1,34 +1,38 @@
-import type {Locale} from './types.ts';
+import style from './styles/styles.scss?inline';
+import type {CatResponse, Locale} from '../types';
 import {Attribute, Component, Watch} from '../decorators';
 import {namespace} from './config';
-import {events} from './events.ts';
+import {events} from './events';
 import {l10n} from '../l10n';
-import {Prerender} from './prerender.ts';
-import style from './styles/styles.scss?inline';
+import {Prerender} from './prerender';
+import {ActionIds} from './constants';
+import {getCats, ElementsService} from './services';
 
 @Component
-class MyAutocomplete extends HTMLElement {
+class MfeSeed extends HTMLElement {
     @Attribute() locale: Locale = 'en_GB';
 
     private isReady?: boolean;
     private apiAbortController?: AbortController;
-    private data?: any;
+    private data: Array<CatResponse>;
 
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
         events.setHost(this);
         l10n.initialize(this.locale);
+        ElementsService.init(this.shadowRoot!);
+        this.data = [];
         this.isReady = false;
     }
 
     //#region Init
     async connectedCallback() {
-        console.info('connectedCallback');
         await this.init();
         this.render();
+        this.initEventListeners();
         this.isReady = true;
-        events.publish().ready(this.setData);
+        events.publish().ready('MFE ready!');
     }
 
     async init(): Promise<void> {
@@ -43,22 +47,24 @@ class MyAutocomplete extends HTMLElement {
         this.apiAbortController = new AbortController();
 
         try {
-            const response = await fetch('https://httpbin.org/get', {
-                signal: this.apiAbortController.signal,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            this.data = await response.json();
-            console.info('Data loaded', this.data);
+            this.data = await getCats(this.apiAbortController);
+            events.publish().loaded(this.data);
         } catch (e: unknown) {
             this.renderFallback();
         }
     }
 
-    setData(text: string): void {
-        console.log(text);
+    initEventListeners(): void {
+        this.shadowRoot!.addEventListener('click', (e: Event) => this.clickEventHandler(e));
+        this.shadowRoot!.addEventListener('keypress', (e: Event) => {
+            if ((e as KeyboardEvent).key === 'Enter') {
+                e.preventDefault();
+                e.stopPropagation();
+                this.clickEventHandler(e);
+            }
+        });
     }
+
     //#endregion
 
     //#region Render
@@ -89,10 +95,35 @@ class MyAutocomplete extends HTMLElement {
                 <style>
                   ${style}
                 </style>
-                <div class="success">${l10n.t('general.success')}</div>
+                <h3 class="${namespace}-title">${l10n.t('general.title')}</h3>
+                <div class="${namespace}-container">
+                    <img class="${namespace}-image" src="${this.data[0].url}" alt="cat" />
+                    <button data-action="${ActionIds.AnotherOneBtn}" class="${namespace}-btn">${l10n.t('general.btnText')}</button>
+                </div>
             </div>
         `;
     }
+
+    //#endregion
+
+    //#region Event handlers
+    clickEventHandler(event: Event): void {
+        const {action} = (event.target as HTMLElement).dataset;
+        if (!action) {
+            return;
+        }
+        switch (action) {
+            case ActionIds.AnotherOneBtn:
+                this.getAnotherCat();
+                break;
+        }
+    }
+
+    getAnotherCat(): void {
+        this.renderSkeleton();
+        this.loadData().then(() => this.render());
+    }
+
     //#endregion
 
     //#region Watcher
@@ -104,7 +135,8 @@ class MyAutocomplete extends HTMLElement {
             this.render();
         }
     }
+
     //#endregion
 }
 
-customElements.define('my-autocomplete', MyAutocomplete);
+customElements.define('mfe-seed', MfeSeed);
