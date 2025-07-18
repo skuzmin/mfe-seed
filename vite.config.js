@@ -24,8 +24,10 @@ export default defineConfig(({mode}) => {
             reporter: ['text', 'lcov'],
             reportsDirectory: '../coverage',
             all: true,
-            // include: ['/**/*.{ts,tsx}'],
             exclude: ['**/*.d.ts', 'test/**', '**/node_modules/**'],
+        },
+        cache: {
+            dir: '../node_modules/.vite',
         },
     };
 
