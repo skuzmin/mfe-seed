@@ -9,7 +9,7 @@ import {ActionIds} from './constants';
 import {getCats, ElementsService} from './services';
 
 @Component
-class MfeSeed extends HTMLElement {
+export class MfeSeed extends HTMLElement {
     @Attribute() locale: Locale = 'en_GB';
 
     private isReady?: boolean;
@@ -97,7 +97,7 @@ class MfeSeed extends HTMLElement {
                 </style>
                 <h3 class="${namespace}-title">${l10n.t('general.title')}</h3>
                 <div class="${namespace}-container">
-                    <img class="${namespace}-image" src="${this.data[0].url}" alt="cat" />
+                    <img class="${namespace}-image" src="${this.data[0]?.url}" alt="cat" />
                     <button data-action="${ActionIds.AnotherOneBtn}" class="${namespace}-btn">${l10n.t('general.btnText')}</button>
                 </div>
             </div>

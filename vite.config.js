@@ -15,13 +15,27 @@ export default defineConfig(({mode}) => {
         },
     };
 
+    const testConfig = {
+        globals: true,
+        environment: 'jsdom',
+        include: ['../test/**/*.spec.ts'],
+        coverage: {
+            provider: 'v8',
+            reporter: ['text', 'lcov'],
+            reportsDirectory: '../coverage',
+            all: true,
+            // include: ['/**/*.{ts,tsx}'],
+            exclude: ['**/*.d.ts', 'test/**', '**/node_modules/**'],
+        },
+    };
+
     return {
         root: rootConfig,
         server: {
             port: 7000,
         },
         css: cssConfig,
-        // test: testConfig,
+        test: testConfig,
         build: {
             outDir: '../dist/frontend',
             emptyOutDir: true,

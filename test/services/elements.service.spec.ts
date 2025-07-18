@@ -5,7 +5,7 @@ describe('ElementsService', () => {
     let shadowRoot: ShadowRoot;
 
     beforeAll(() => {
-        shadowRoot = document.createElement('<div>').attachShadow({ mode: 'open' });
+        shadowRoot = document.createElement('div').attachShadow({ mode: 'open' });
         ElementsService.init(shadowRoot);
     });
 
@@ -22,6 +22,17 @@ describe('ElementsService', () => {
             const createInstance = () => new ElementsService(shadowRoot);
 
             expect(createInstance).toBeTruthy();
+        });
+
+        it('should log an error on second init attempt', () => {
+            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+            ElementsService.init(shadowRoot);
+            ElementsService.init(shadowRoot);
+
+            expect(consoleSpy).toHaveBeenCalledWith('Singleton: new instance cannot be created!');
+
+            consoleSpy.mockRestore();
         });
     });
 

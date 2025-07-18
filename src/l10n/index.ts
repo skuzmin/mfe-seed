@@ -30,7 +30,7 @@ export function get<TData, TPath extends string, TDefault = GetFieldType<TData, 
 let translations: Resource;
 let activeLocale: Locale;
 
-const initialize = (locale: Locale, res: Record<Locale, Resource> = resources) => {
+const initialize = <T extends Record<Locale, any> = Record<Locale, Resource>>(locale: Locale, res: T = resources as T) => {
     activeLocale = locale;
     translations = res[locale] ?? {};
 };

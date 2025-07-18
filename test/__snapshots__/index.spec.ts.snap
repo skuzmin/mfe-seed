@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`index.ts > should render correctly 1`] = `
+"
+            <div class="mfe-seed">
+                <style>
+                  
+                </style>
+                <h3 class="mfe-seed-title">Cat inspector</h3>
+                <div class="mfe-seed-container">
+                    <img class="mfe-seed-image" src="undefined" alt="cat">
+                    <button data-action="another-one-btn" class="mfe-seed-btn">Another one</button>
+                </div>
+            </div>
+        "
+`;
