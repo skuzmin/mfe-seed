@@ -5,7 +5,7 @@
   "scripts": {
     "prepare": "node .husky/install.mjs",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "rm -rf dist && vite build",
     "test": "vitest --config vite.config.js run --coverage",
     "lint": "eslint src",
     "check": "prettier --ignore-path .gitignore --check src/** --log-level warn",

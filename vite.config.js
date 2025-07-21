@@ -1,52 +1,52 @@
-import {defineConfig, loadEnv} from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import seedServ from './seed-plugin.js';
 
-export default defineConfig(({mode}) => {
-    const env = loadEnv(mode, 'src', '');
-    const rootConfig = 'src';
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, 'src', '');
+  const rootConfig = 'src';
 
-    const cssConfig = {
-        preprocessorOptions: {
-            scss: {
-                additionalData: `
+  const cssConfig = {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
                     $namespace: '${env.VITE_MFE_NAME}';
                 `,
-            },
-        },
-    };
+      },
+    },
+  };
 
-    const testConfig = {
-        globals: true,
-        environment: 'jsdom',
-        include: ['../test/**/*.spec.ts'],
-        coverage: {
-            provider: 'v8',
-            reporter: ['text', 'lcov'],
-            reportsDirectory: '../coverage',
-            all: true,
-            exclude: ['**/*.d.ts', 'test/**', '**/node_modules/**'],
-        }
-    };
+  const testConfig = {
+    globals: true,
+    environment: 'jsdom',
+    include: ['../test/**/*.spec.ts'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'lcov'],
+      reportsDirectory: '../coverage',
+      all: true,
+      exclude: ['**/*.d.ts', 'test/**', '**/node_modules/**'],
+    },
+  };
 
-    return {
-        root: rootConfig,
-        cacheDir: '../node_modules/.vite',
-        server: {
-            port: 7000,
-        },
-        css: cssConfig,
-        test: testConfig,
-        build: {
-            outDir: '../dist/frontend',
-            emptyOutDir: true,
-            target: 'esnext',
-            lib: {
-                name: 'frontend',
-                entry: 'frontend/index.ts',
-                formats: ['iife'],
-                fileName: () => 'index.js',
-            },
-        },
-        plugins: [seedServ()]
-    };
+  return {
+    root: rootConfig,
+    cacheDir: '../node_modules/.vite',
+    server: {
+      port: 7000,
+    },
+    css: cssConfig,
+    test: testConfig,
+    build: {
+      outDir: '../dist/frontend',
+      emptyOutDir: true,
+      target: 'esnext',
+      lib: {
+        name: 'frontend',
+        entry: 'frontend/index.ts',
+        formats: ['iife'],
+        fileName: () => 'index.js',
+      },
+    },
+    plugins: [seedServ()],
+  };
 });
