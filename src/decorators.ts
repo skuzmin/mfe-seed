@@ -11,8 +11,8 @@ export function Component(constructor: Function): void {
 
     constructor.prototype.attributeChangedCallback = function (
         name: string,
-        oldVal: any,
-        newVal: any
+        oldVal: string,
+        newVal: string
     ) {
         this[name] = newVal;
         const method = watchers.get(name);

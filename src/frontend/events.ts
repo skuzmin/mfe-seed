@@ -20,10 +20,10 @@ const usePublish = <T>(namespace: string, eventType: EventType) => {
                 detail: payload,
                 bubbles: true,
                 composed: true,
-            }))
+            }));
         };
     };
-}
+};
 
 let eventStore: EventMap;
 const eventMap = (host: HTMLElement) => ({

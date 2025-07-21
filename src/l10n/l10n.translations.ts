@@ -18,7 +18,7 @@ const uk_UA = {
         success: 'Вітаннячко!',
         error: 'Лишенько, у нас помилка',
     },
-}
+};
 
 export const resources: Record<Locale, Resource> = {
     en_GB,

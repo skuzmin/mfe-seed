@@ -1,6 +1,7 @@
 import {type Resource, resources} from './l10n.translations';
 import type {Locale} from '../types.ts';
 
+/* eslint-disable */
 type PathInto<T extends Record<string, any>, V = string> = keyof {
     [K in keyof T as T[K] extends V
         ? K

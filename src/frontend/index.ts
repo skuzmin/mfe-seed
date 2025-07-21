@@ -49,7 +49,7 @@ export class MfeSeed extends HTMLElement {
         try {
             this.data = await getCats(this.apiAbortController);
             events.publish().loaded(this.data);
-        } catch (e: unknown) {
+        } catch {
             this.renderFallback();
         }
     }
