@@ -1,3 +1,3 @@
 export const ActionIds = {
-    AnotherOneBtn: 'another-one-btn',
+  AnotherOneBtn: 'another-one-btn',
 } as const;

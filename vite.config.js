@@ -25,14 +25,12 @@ export default defineConfig(({mode}) => {
             reportsDirectory: '../coverage',
             all: true,
             exclude: ['**/*.d.ts', 'test/**', '**/node_modules/**'],
-        },
-        cache: {
-            dir: '../node_modules/.vite',
-        },
+        }
     };
 
     return {
         root: rootConfig,
+        cacheDir: '../node_modules/.vite',
         server: {
             port: 7000,
         },

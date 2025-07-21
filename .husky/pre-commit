@@ -3,3 +3,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -f .nvmrc ] && nvm use || nvm use default
 
 npm run test
+npm run check
+npm run lint

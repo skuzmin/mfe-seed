@@ -1,7 +1,7 @@
 import skeletonStyles from './styles/skeleton.scss?inline';
 
 export const Prerender = () => {
-    return `
+  return `
     <div>
         <style>
           ${skeletonStyles}
