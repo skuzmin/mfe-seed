@@ -1,0 +1,69 @@
+version: '1.0'
+name: MFE Playground
+url:
+  frontend: __FRONTEND__
+  prerender: __BACKEND__/prerender
+publisher:
+  name: __NAME__
+  email: __CONTACT__
+description: MFE decription
+documentation: openmfe/documentation.md
+
+attributes:
+  - name: color-mode
+    description: The color-mode parameter describes which theme modifier should be used
+    default: 'light'
+    required: true
+    schema:
+      type: string
+      enum: ['light', 'dark']
+
+  - name: locale
+    description: The locale is given to support a language
+    default: 'en_GB'
+    required: true
+    schema:
+      type: string
+      enum: ['en_GB', 'uk_UA']
+
+  - name: test
+    description: test
+    default: 'test'
+    required: true
+    schema:
+      type: string
+
+events:
+  - name: __MFE__.ready
+    description: This event is fired when something happens
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: the message of this event
+
+functions:
+  - name: setData
+    description: A function to set some data on the mfe.
+    parameters:
+      - name: data
+        description: An object containing the data
+        required: true
+        schema:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Some code inside the data object
+            label:
+              type: string
+              description: Some label inside the data object
+
+examples:
+  - name: Example
+    description: This is some example config
+    attributes:
+      test: test
+      locale: en_GB
+      color-mode: light

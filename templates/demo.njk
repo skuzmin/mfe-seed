@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Playground</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/index.css"/>
+    <script type="module">
+        window.PLAYGROUND = { manifest: {{ manifest | dump | safe }} };
+    </script>
+</head>
+    <body data-mfe="{{ mfe }}">
+        <section class="playground-controls" id="playground-controls">
+            <div class="item">
+                <label for="prop1">Prop1:</label>
+                <input id="prop1" type="text"/>
+            </div>
+            <div class="item">
+                <label for="prop2">Prop2:</label>
+                <input id="prop2" type="checkbox"/>
+            </div>
+            <div class="item">
+                <label for="prop3">Prop3:</label>
+                <select id="prop3">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="item">
+                <button class="apply-btn" id="playground-controls-btn">Apply</button>
+            </div>
+        </section>
+        <section class="playground-content" id="playground-content">
+        </section>
+        <script src="js/index.js" defer></script>
+        <script type="module" src="http://localhost:7000/frontend/index.ts"></script>
+    </body>
+</html>

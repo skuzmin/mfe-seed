@@ -9,7 +9,7 @@
     "test": "vitest --config vite.config.js run --coverage",
     "lint": "eslint src",
     "check": "prettier --ignore-path .gitignore --check src/** --log-level warn",
-    "check:overwrite": "prettier --ignore-path .gitignore --write {src,test}/; eslint --fix src",
+    "check:fix": "prettier --ignore-path .gitignore --write {src,test}/; eslint --fix src",
     "serve": "node --loader ts-node/esm server.ts"
   },
   "devDependencies": {
@@ -24,6 +24,7 @@
     "eslint-plugin-prettier": "^5.5.3",
     "hono": "^4.7.10",
     "husky": "^9.1.7",
+    "js-yaml": "^4.1.0",
     "jsdom": "^26.1.0",
     "nunjucks": "^3.2.4",
     "prettier": "^3.6.2",
@@ -32,6 +33,7 @@
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.37.0",
     "vite": "^6.3.5",
+    "vite-plugin-static-copy": "^3.1.1",
     "vitest": "^3.2.4"
   }
 }

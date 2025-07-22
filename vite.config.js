@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite';
-import seedServ from './seed-plugin.js';
+import playgroundServ from './playground-plugin.js';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, 'src', '');
@@ -9,8 +10,8 @@ export default defineConfig(({ mode }) => {
     preprocessorOptions: {
       scss: {
         additionalData: `
-                    $namespace: '${env.VITE_MFE_NAME}';
-                `,
+          $namespace: '${env.VITE_MFE_NAME}';
+        `,
       },
     },
   };
@@ -47,6 +48,16 @@ export default defineConfig(({ mode }) => {
         fileName: () => 'index.js',
       },
     },
-    plugins: [seedServ()],
+    plugins: [
+      playgroundServ(env),
+      viteStaticCopy({
+        targets: [
+          {
+            src: ['manifest.yaml'],
+            dest: './',
+          },
+        ],
+      }),
+    ],
   };
 });
