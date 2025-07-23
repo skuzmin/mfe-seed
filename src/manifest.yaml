@@ -33,6 +33,13 @@ attributes:
     schema:
       type: string
 
+  - name: bob
+    description: bob
+    default: 'false'
+    required: true
+    schema:
+      type: boolean
+
 events:
   - name: __MFE__.ready
     description: This event is fired when something happens
@@ -60,10 +67,11 @@ functions:
               type: string
               description: Some label inside the data object
 
-examples:
-  - name: Example
-    description: This is some example config
-    attributes:
-      test: test
-      locale: en_GB
-      color-mode: light
+example:
+  name: Example
+  description: This is some example config
+  attributes:
+    bob: true
+    test: test
+    locale: en_GB
+    color-mode: light
