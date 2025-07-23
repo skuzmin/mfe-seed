@@ -1,104 +1,119 @@
-const mfe = document.body.getAttribute('data-mfe');
-const { manifest } = window.PLAYGROUND;
+(function () {
+  const mfe = document.body.getAttribute('data-mfe');
+  const { manifest } = window.PLAYGROUND;
 
-injectMFE();
+  const CONTENT_ID = 'playground-content';
+  const CONTROLS_ID = 'playground-controls';
+  const CONTROLS_BTN_ID = 'playground-controls-btn';
 
-function injectMFE() {
-  const component = document.createElement(mfe);
-  const attributes = generateAttributesForMFE();
-  for (const key in attributes) {
-    component.setAttribute(key, attributes[key]);
+  function injectMFE() {
+    const component = document.createElement(mfe);
+    const container = document.getElementById(CONTENT_ID);
+    const attributes = getAttributesForMFE();
+    for (const key in attributes) {
+      component.setAttribute(key, attributes[key]);
+    }
+    container.appendChild(component);
+    createControls();
   }
 
-  const container = document.getElementById('playground-content');
-  container.innerHTML = '';
-  container.appendChild(component);
-}
-
-///////
-function generateAttributesForMFE() {
-  const hasQueryParams = window.location.search.length > 1;
-  if (hasQueryParams) {
-    const params = new URLSearchParams(window.location.search);
-    return Object.fromEntries(params.entries());
-  } else {
-    generateQueryParams(manifest.example.attributes);
-    return manifest.example.attributes;
-  }
-}
-
-//////////////
-generateControls();
-
-function generateControls() {
-  const elements = [];
-  const controlsContainerEl = document.getElementById('playground-controls');
-  manifest.attributes.forEach((control) => {
-    elements.push(generateControlItem(control));
-  });
-  elements.push(
-    '<div class="item"><button class="apply-btn" id="playground-controls-btn">Apply</button></div>',
-  );
-  controlsContainerEl.innerHTML = elements.join('');
-  setControlValues();
-  document
-    .getElementById('playground-controls-btn')
-    .addEventListener('click', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      const attributes = {};
-      manifest.attributes.forEach((attribute) => {
-        const el = document.getElementById(attribute.name);
-        attributes[attribute.name] = el.type === 'checkbox' ? el.checked : el.value;
-      });
-      generateQueryParams(attributes);
-      window.location.reload();
-    });
-}
-
-function generateControlItem(control) {
-  let template = '';
-  if (!!control.schema.enum) {
-    const options = control.schema.enum
-      .map((val) => `<option value="${val}">${val}</option>`)
-      .join('');
-    template = `
-      <select id="${control.name}" required="${control.required}">
-        ${options}
-      </select>
-    `;
-  } else {
-    const type = control.schema.type === 'boolean' ? 'checkbox' : 'text';
-    template = `
-      <input id="${control.name}" type="${type}" required="${control.required}"/>
-    `;
-  }
-  return `
-    <div class="item">
-        <label for="${control.name}">${control.name}:</label>
-        ${template}
-    </div>
-  `;
-}
-
-/////////
-function setControlValues() {
-  const params = new URLSearchParams(window.location.search);
-  const data = Object.fromEntries(params.entries());
-  for (const key in data) {
-    const el = document.getElementById(key);
-    if (el.type === 'checkbox') {
-      el.checked = data[key];
+  function getAttributesForMFE() {
+    const hasQueryParams = window.location.search.length > 1;
+    if (hasQueryParams) {
+      // MFE attributes from query params
+      return getAttributesFromQueryParams();
     } else {
-      el.value = data[key];
+      // MFE attributes from manifest
+      setQueryParams(manifest.example.attributes);
+      return manifest.example.attributes;
     }
   }
-}
 
-/////////
-function generateQueryParams(data) {
-  const queryString = new URLSearchParams(data).toString();
-  const url = new URL(window.location.href);
-  url.search = queryString;
-  window.history.replaceState({}, '', url);
-}
+  function createControls() {
+    const elements = [];
+    const controlsContainerEl = document.getElementById(CONTROLS_ID);
+    // generate control using manifest
+    manifest.attributes.forEach((control) => {
+      elements.push(generateControlItem(control));
+    });
+    // add APPLY button to the end of controls
+    elements.push(
+      `<div class="item"><button class="apply-btn" id="${CONTROLS_BTN_ID}">Apply</button></div>`,
+    );
+    controlsContainerEl.innerHTML = elements.join('');
+    // fill controls with values from query/manifest(example)
+    setControlsValues();
+
+    document.getElementById(CONTROLS_BTN_ID).addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      const values = getControlsValues();
+      setQueryParams(values);
+      window.location.reload();
+    });
+  }
+
+  function generateControlItem(control) {
+    let template = '';
+    // generate html select
+    if (!!control.schema.enum) {
+      const options = control.schema.enum
+        .map((val) => `<option value="${val}">${val}</option>`)
+        .join('');
+
+      template = `
+        <select id="${control.name}" required="${control.required}">
+          ${options}
+        </select>
+      `;
+    } else {
+      // generate html inputs
+      const type = control.schema.type === 'boolean' ? 'checkbox' : 'text';
+      template = `
+        <input id="${control.name}" type="${type}" required="${control.required}"/>
+      `;
+    }
+
+    return `
+      <div class="item">
+        <label for="${control.name}">${control.name}:</label>
+        ${template}
+      </div>
+    `;
+  }
+
+  function getAttributesFromQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return Object.fromEntries(params.entries());
+  }
+
+  function getControlsValues() {
+    const controls = {};
+    manifest.attributes.forEach((attribute) => {
+      const el = document.getElementById(attribute.name);
+      controls[attribute.name] = el.type === 'checkbox' ? el.checked : el.value;
+    });
+    return controls;
+  }
+
+  function setControlsValues() {
+    const attributes = getAttributesFromQueryParams();
+    for (const key in attributes) {
+      const el = document.getElementById(key);
+      if (el.type === 'checkbox') {
+        el.checked = attributes[key] === 'true';
+      } else {
+        el.value = attributes[key];
+      }
+    }
+  }
+
+  function setQueryParams(data) {
+    const queryString = new URLSearchParams(data).toString();
+    const url = new URL(window.location.href);
+    url.search = queryString;
+    window.history.replaceState({}, '', url);
+  }
+
+  injectMFE();
+})();

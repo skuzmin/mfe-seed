@@ -14,6 +14,7 @@ export default function playgroundServ(env) {
 
   app.use('/css/index.css', serveStatic({ path: './templates/css/index.css' }));
   app.use('/js/index.js', serveStatic({ path: './templates/js/index.js' }));
+  app.use('/favicon.png', serveStatic({ path: './templates/favicon.png' }));
   app.get('/demo', (c) => {
     const html = nunjucks.render('./templates/demo.njk', { isDev, mfe, manifest });
     return c.html(html);
