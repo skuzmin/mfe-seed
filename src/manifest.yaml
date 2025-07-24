@@ -1,13 +1,14 @@
 version: '1.0'
-name: MFE Playground
+name: __MFE__
+tag: 'mfe-seed'
 url:
   frontend: __FRONTEND__
   prerender: __BACKEND__/prerender
 publisher:
   name: __NAME__
   email: __CONTACT__
-description: MFE decription
-documentation: openmfe/documentation.md
+description: MFE description
+documentation: ['openmfe/documentation.md']
 
 attributes:
   - name: color-mode
@@ -42,13 +43,22 @@ attributes:
 
 events:
   - name: __MFE__.ready
-    description: This event is fired when something happens
+    description: This event is fired when MFE is ready to use
     schema:
       type: object
       properties:
         message:
           type: string
-          description: the message of this event
+          description: the message of the event
+
+  - name: __MFE__.loaded
+    description: This event is fired when MFE loaded data from API
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: the message of the event
 
 functions:
   - name: setData

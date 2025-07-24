@@ -1,0 +1,45 @@
+:root {
+    --main-color-bg: #11191f;
+    --controls-color-bg: #202B46;
+    --text-color: #edf0f3;
+    --code-color-bg: #18232c;
+    --code-zone-color-bg: #2a3d4d;
+    --code-color: #73828c;
+    --primary-color: #3e97ff;
+    --primary-hover-color: #607a9d;
+    --border-color: #5c6370;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+section {
+    margin-bottom: 1.5rem;
+}
+
+p {
+    margin-bottom: 0.5rem;
+}

@@ -45,11 +45,11 @@ export default defineConfig(({ mode }) => {
         name: 'frontend',
         entry: 'frontend/index.ts',
         formats: ['iife'],
-        fileName: () => 'index.js',
+        fileName: () => 'demo.js',
       },
     },
     plugins: [
-      playgroundServ(env),
+      playgroundServ(),
       viteStaticCopy({
         targets: [
           {

@@ -7,16 +7,20 @@ import yaml from 'js-yaml';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-export default function playgroundServ(env) {
+export default function playgroundServ() {
   const app = new Hono();
-  const mfe = env.VITE_MFE_NAME;
   let manifest;
 
-  app.use('/css/index.css', serveStatic({ path: './templates/css/index.css' }));
-  app.use('/js/index.js', serveStatic({ path: './templates/js/index.js' }));
+  app.use('/css/*', serveStatic({ root: './templates' }));
+  app.use('/js/*', serveStatic({ root: './templates' }));
+  app.use('/assets/*', serveStatic({ root: './templates' }));
   app.use('/favicon.png', serveStatic({ path: './templates/favicon.png' }));
   app.get('/demo', (c) => {
-    const html = nunjucks.render('./templates/demo.njk', { isDev, mfe, manifest });
+    const html = nunjucks.render('./templates/demo.njk', { isDev, manifest });
+    return c.html(html);
+  });
+  app.get('/', (c) => {
+    const html = nunjucks.render('./templates/landing.njk', { manifest });
     return c.html(html);
   });
 

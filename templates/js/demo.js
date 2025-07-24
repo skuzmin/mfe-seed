@@ -1,5 +1,4 @@
 (function () {
-  const mfe = document.body.getAttribute('data-mfe');
   const { manifest } = window.PLAYGROUND;
 
   const CONTENT_ID = 'playground-content';
@@ -7,7 +6,7 @@
   const CONTROLS_BTN_ID = 'playground-controls-btn';
 
   function injectMFE() {
-    const component = document.createElement(mfe);
+    const component = document.createElement(manifest.tag);
     const container = document.getElementById(CONTENT_ID);
     const attributes = getAttributesForMFE();
     for (const key in attributes) {
