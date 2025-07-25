@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import MarkdownIt from 'markdown-it';
+import markdownItAnchor from 'markdown-it-anchor';
 import hljs from 'highlight.js/lib/common';
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -34,6 +35,7 @@ export default function playgroundServ(root) {
         return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + '</code></pre>';
       }
     });
+    md.use(markdownItAnchor);
     const mdPath = path.resolve(`${root}/openmfe/index.md`);
     const mdRaw = fs.readFileSync(mdPath, 'utf8');
     const content = md.render(mdRaw);

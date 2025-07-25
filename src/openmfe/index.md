@@ -1,5 +1,9 @@
 # Project Demo Page
 
+- [Features](#features)
+- [Team Members](#team-members)
+- [Code Example](#code-example)
+
 Welcome to the **Demo Page**. This page showcases some basic Markdown elements.
 
 ## Features
