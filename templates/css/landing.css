@@ -1,9 +1,19 @@
+/*General*/
 body {
     background-color: var(--main-color-bg);
     color: var(--text-color);
     max-width: 1200px;
     margin: 0 auto;
     padding: 1rem;
+}
+
+.landing-link {
+    color: var(--primary-color);
+}
+
+/*Title*/
+.title-table {
+    width: 35%;
 }
 
 /*Code*/
@@ -13,9 +23,6 @@ body {
     color: var(--code-color);
     background-color: var(--code-color-bg);
     border-radius: 0.5rem;
-}
-.demo-link {
-    color: var(--primary-color);
 }
 
 /*Table*/
@@ -28,29 +35,36 @@ body {
     border-collapse: collapse;
     border-radius: 0.5rem;
 }
+
 .landing-table th {
     padding: 0.5rem 0.75rem;
     border-bottom: 2px solid var(--border-color);
 }
+
 .landing-table td {
     padding: 0.75rem;
     border-bottom: 1px solid var(--border-color);
 }
+
 .landing-table td.collapsed button img {
     transform: rotate(-90deg);
 }
+
 .landing-table td.collapsed pre {
     max-height: 0;
     overflow: hidden;
 }
+
 .landing-table tbody tr:last-child td {
     border: none;
 }
+
 .landing-table span {
     padding: 0.5rem;
     border-radius: 0.25rem;
     background-color: var(--code-zone-color-bg);
 }
+
 .payload-btn {
     display: inline-flex;
     align-items: center;
@@ -63,6 +77,7 @@ body {
     box-shadow: none;
     cursor: pointer;
 }
+
 .payload-btn:hover {
     background-color: var(--primary-hover-color);
 }

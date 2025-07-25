@@ -1,6 +1,7 @@
 (function () {
   const { manifest } = window.PLAYGROUND;
 
+  const TITLE_SECTION_ID = 'title-section';
   const EXAMPLE_CONTAINER_ID = 'example-container';
   const ATTRIBUTES_SECTION_ID = 'attributes-section';
   const ATTRIBUTES_TABLE_CONTAINER_ID = 'attributes-table-container';
@@ -17,6 +18,26 @@
       const el = document.getElementById(contentId);
       el.innerHTML = callback(data);
     }
+  }
+
+  function generateTitleSection(data) {
+    let template = `<h1>${data.name}</h1>`;
+    template += `<table class="title-table"><tbody>`;
+    if(!!data.description) {
+      template += `<tr"><td>Description:</td><td>${data.description}</td></tr>`;
+    }
+    if(!!data.publisher) {
+      template += data.publisher.name ? `<tr"><td>Maintainer:</td><td>${data.publisher.name}</td></tr>` : '';
+      template += data.publisher.email ? `<tr"><td>Contact:</td><td>${data.publisher.email}</td></tr>` : '';
+    }
+    if(!!data.repository) {
+      template += `<tr"><td>Repository:</td><td><a class="landing-link" target="_blank" href="${data.repository}">${data.repository}</a></td></tr>`;
+    }
+    if(!!data.documentation) {
+      template += `<tr"><td>Documentation:</td><td><a class="landing-link" href="${data.documentation}">Link</a></td></tr>`;
+    }
+    template += `</tbody></table>`;
+    return template;
   }
 
   function generateExampleTemplate(data) {
@@ -109,6 +130,7 @@
     });
   }
 
+  contentGenerator(null, TITLE_SECTION_ID, manifest, generateTitleSection);
   contentGenerator(null, EXAMPLE_CONTAINER_ID, manifest.example.attributes, generateExampleTemplate);
   contentGenerator(ATTRIBUTES_SECTION_ID, ATTRIBUTES_TABLE_CONTAINER_ID, manifest.attributes, generateAttributesTable);
   contentGenerator(EVENTS_SECTION_ID, EVENTS_TABLE_CONTAINER_ID, manifest.events, generateEventsTable);
