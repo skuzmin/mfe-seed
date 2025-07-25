@@ -12,8 +12,12 @@
         window.PLAYGROUND = { manifest: {{ manifest | dump | safe }} };
     </script>
 </head>
-<body>
+<body class="container">
     <section id="title-section"></section>
+    <section>
+        <h3>Demo</h3>
+        <a href="/demo">Example</a>
+    </section>
     <section>
         <h3>How To</h3>
         <p>To integrate the MFE, load the frontend JavaScript bundle into an HTML page and then use the MFE's tag.</p>
@@ -26,10 +30,6 @@
             </code>
         </pre>
         <script src="js/landing.js" defer></script>
-    </section>
-    <section>
-        <h3>Demo</h3>
-        <a class="landing-link" href="/demo">Example</a>
     </section>
     <section id="attributes-section">
         <h3>Attributes</h3>

@@ -31,10 +31,10 @@
       template += data.publisher.email ? `<tr"><td>Contact:</td><td>${data.publisher.email}</td></tr>` : '';
     }
     if(!!data.repository) {
-      template += `<tr"><td>Repository:</td><td><a class="landing-link" target="_blank" href="${data.repository}">${data.repository}</a></td></tr>`;
+      template += `<tr"><td>Repository:</td><td><a target="_blank" href="${data.repository}">${data.repository}</a></td></tr>`;
     }
     if(!!data.documentation) {
-      template += `<tr"><td>Documentation:</td><td><a class="landing-link" href="${data.documentation}">Link</a></td></tr>`;
+      template += `<tr"><td>Documentation:</td><td><a href="${data.documentation}">Link</a></td></tr>`;
     }
     template += `</tbody></table>`;
     return template;
