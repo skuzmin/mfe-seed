@@ -49,7 +49,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [
-      playgroundServ(),
+      playgroundServ(rootConfig),
       viteStaticCopy({
         targets: [
           {

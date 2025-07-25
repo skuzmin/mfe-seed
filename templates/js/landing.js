@@ -34,7 +34,7 @@
       template += `<tr"><td>Repository:</td><td><a target="_blank" href="${data.repository}">${data.repository}</a></td></tr>`;
     }
     if(!!data.documentation) {
-      template += `<tr"><td>Documentation:</td><td><a href="${data.documentation}">Link</a></td></tr>`;
+      template += `<tr"><td>Documentation:</td><td><a href="/documentation">Link</a></td></tr>`;
     }
     template += `</tbody></table>`;
     return template;

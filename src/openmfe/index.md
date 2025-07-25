@@ -1,5 +1,3 @@
-PEWPEW
-
 # Project Demo Page
 
 Welcome to the **Demo Page**. This page showcases some basic Markdown elements.

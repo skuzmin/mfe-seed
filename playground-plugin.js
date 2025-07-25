@@ -4,10 +4,12 @@ import nunjucks from 'nunjucks';
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
+import MarkdownIt from 'markdown-it';
+import hljs from 'highlight.js/lib/common';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-export default function playgroundServ() {
+export default function playgroundServ(root) {
   const app = new Hono();
   let manifest;
 
@@ -17,6 +19,25 @@ export default function playgroundServ() {
   app.use('/favicon.png', serveStatic({ path: './templates/favicon.png' }));
   app.get('/demo', (c) => {
     const html = nunjucks.render('./templates/demo.njk', { isDev, manifest });
+    return c.html(html);
+  });
+  app.get('/documentation', (c) => {
+    const md = MarkdownIt({
+      highlight: function (str, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+          try {
+            return '<pre><code class="hljs">' +
+              hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+              '</code></pre>';
+          } catch {}
+        }
+        return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + '</code></pre>';
+      }
+    });
+    const mdPath = path.resolve(`${root}/openmfe/index.md`);
+    const mdRaw = fs.readFileSync(mdPath, 'utf8');
+    const content = md.render(mdRaw);
+    const html = nunjucks.render('./templates/docs.njk', { content });
     return c.html(html);
   });
   app.get('/', (c) => {
