@@ -14,12 +14,18 @@ export default function playgroundServ(root) {
   const app = new Hono();
   let manifest;
 
+  nunjucks.configure('templates', {
+    autoescape: true,
+    watch: true,
+    noCache: true
+  });
+
   app.use('/css/*', serveStatic({ root: './templates' }));
   app.use('/js/*', serveStatic({ root: './templates' }));
   app.use('/assets/*', serveStatic({ root: './templates' }));
   app.use('/favicon.png', serveStatic({ path: './templates/favicon.png' }));
   app.get('/demo', (c) => {
-    const html = nunjucks.render('./templates/demo.njk', { isDev, manifest });
+    const html = nunjucks.render('./pages/demo.njk', { isDev, manifest });
     return c.html(html);
   });
   app.get('/documentation', (c) => {
@@ -38,12 +44,12 @@ export default function playgroundServ(root) {
     md.use(markdownItAnchor);
     const mdPath = path.resolve(`${root}/openmfe/index.md`);
     const mdRaw = fs.readFileSync(mdPath, 'utf8');
-    const content = md.render(mdRaw);
-    const html = nunjucks.render('./templates/docs.njk', { content });
+    const text = md.render(mdRaw);
+    const html = nunjucks.render('./pages/docs.njk', { text, manifest });
     return c.html(html);
   });
   app.get('/', (c) => {
-    const html = nunjucks.render('./templates/landing.njk', { manifest });
+    const html = nunjucks.render('./pages/landing.njk', { manifest });
     return c.html(html);
   });
 

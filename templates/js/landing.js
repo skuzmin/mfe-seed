@@ -24,17 +24,17 @@
     let template = `<h1>${data.name}</h1>`;
     template += `<table class="title-table"><tbody>`;
     if(!!data.description) {
-      template += `<tr"><td>Description:</td><td>${data.description}</td></tr>`;
+      template += `<tr><td>Description:</td><td>${data.description}</td></tr>`;
     }
     if(!!data.publisher) {
-      template += data.publisher.name ? `<tr"><td>Maintainer:</td><td>${data.publisher.name}</td></tr>` : '';
-      template += data.publisher.email ? `<tr"><td>Contact:</td><td>${data.publisher.email}</td></tr>` : '';
+      template += data.publisher.name ? `<tr><td>Maintainer:</td><td>${data.publisher.name}</td></tr>` : '';
+      template += data.publisher.email ? `<tr><td>Contact:</td><td>${data.publisher.email}</td></tr>` : '';
     }
     if(!!data.repository) {
-      template += `<tr"><td>Repository:</td><td><a target="_blank" href="${data.repository}">${data.repository}</a></td></tr>`;
+      template += `<tr><td>Repository:</td><td><a target="_blank" href="${data.repository}">${data.repository}</a></td></tr>`;
     }
     if(!!data.documentation) {
-      template += `<tr"><td>Documentation:</td><td><a href="/documentation">Link</a></td></tr>`;
+      template += `<tr><td>Documentation:</td><td><a href="/documentation">Link</a></td></tr>`;
     }
     template += `</tbody></table>`;
     return template;

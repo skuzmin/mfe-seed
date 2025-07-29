@@ -1,9 +1,5 @@
-.container {
+.landing {
     background-color: var(--main-color-bg);
-    color: var(--text-color);
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
 }
 
 /*Title*/

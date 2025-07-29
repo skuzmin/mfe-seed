@@ -35,3 +35,10 @@ p {
 a {
     color: var(--primary-color);
 }
+
+.container {
+    color: var(--text-color);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
