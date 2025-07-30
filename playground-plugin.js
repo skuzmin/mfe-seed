@@ -17,13 +17,18 @@ export default function playgroundServ(root) {
   nunjucks.configure('templates', {
     autoescape: true,
     watch: true,
-    noCache: true
+    noCache: true,
   });
 
   app.use('/css/*', serveStatic({ root: './templates' }));
   app.use('/js/*', serveStatic({ root: './templates' }));
   app.use('/assets/*', serveStatic({ root: './templates' }));
   app.use('/favicon.png', serveStatic({ path: './templates/favicon.png' }));
+
+  app.get('/prerender', async (c) => {
+    const html = nunjucks.render('./pages/prerender.njk', { manifest });
+    return c.html(html);
+  });
   app.get('/demo', (c) => {
     const html = nunjucks.render('./pages/demo.njk', { isDev, manifest });
     return c.html(html);
@@ -33,13 +38,20 @@ export default function playgroundServ(root) {
       highlight: function (str, lang) {
         if (lang && hljs.getLanguage(lang)) {
           try {
-            return '<pre><code class="hljs">' +
-              hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
-              '</code></pre>';
+            return (
+              '<pre><code class="hljs">' +
+              hljs.highlight(str, { language: lang, ignoreIllegals: true })
+                .value +
+              '</code></pre>'
+            );
           } catch {}
         }
-        return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + '</code></pre>';
-      }
+        return (
+          '<pre><code class="hljs">' +
+          md.utils.escapeHtml(str) +
+          '</code></pre>'
+        );
+      },
     });
     md.use(markdownItAnchor);
     const mdPath = path.resolve(`${root}/openmfe/index.md`);

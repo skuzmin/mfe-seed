@@ -141,4 +141,8 @@ export class MfeSeed extends HTMLElement {
   //#endregion
 }
 
-customElements.define('mfe-seed', MfeSeed);
+if (!customElements.get(namespace)) {
+  customElements.define('mfe-seed', MfeSeed);
+}
+
+export const prerender = () => Prerender();
