@@ -52,7 +52,7 @@ a {
 
 .header .mfe-name {
     color: var(--text-color);
-    background-color: var(--primary-color);
+    background-color: var(--code-zone-color-bg);
     font-weight: bold;
     font-size: 1.2rem;
 }
