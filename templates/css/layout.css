@@ -36,6 +36,37 @@ a {
     color: var(--primary-color);
 }
 
+.header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 0.25rem;
+    background-color: var(--controls-color-bg);
+}
+
+.header a {
+    padding: 0.25rem 0.5rem;
+    text-decoration: none;
+    border-radius: 0.5rem;
+}
+
+.header .mfe-name {
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.header .navigation {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header .navigation a:hover {
+    background-color: var(--primary-hover-color);
+}
+
 .container {
     color: var(--text-color);
     max-width: 1200px;
