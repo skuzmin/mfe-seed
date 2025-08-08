@@ -7,7 +7,7 @@
     "dev:fe": "vite",
     "dev:be": "NODE_NO_WARNINGS=1 node --experimental-strip-types --env-file=./src/.env ./src/backend/index.ts",
     "build": "rm -rf dist && vite build",
-    "test": "vitest --config vite.config.js run --coverage --reporter=hanging-process",
+    "test": "vitest --config vite.config.js run --coverage",
     "lint": "eslint src",
     "check": "prettier --ignore-path .gitignore --check src/** --log-level warn",
     "check:fix": "prettier --ignore-path .gitignore --write {src,test}/; eslint --fix src"
