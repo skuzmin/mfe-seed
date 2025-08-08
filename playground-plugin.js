@@ -8,7 +8,7 @@ import MarkdownIt from 'markdown-it';
 import markdownItAnchor from 'markdown-it-anchor';
 import hljs from 'highlight.js/lib/common';
 
-const isDev = process.env.NODE_ENV !== 'production';
+const isDev = process.env.NODE_ENV === 'development';
 
 export default function playgroundServ(root) {
   const app = new Hono();
@@ -16,7 +16,7 @@ export default function playgroundServ(root) {
 
   nunjucks.configure('templates', {
     autoescape: true,
-    watch: true,
+    watch: isDev,
     noCache: true,
   });
 
@@ -30,7 +30,7 @@ export default function playgroundServ(root) {
     return c.html(html);
   });
   app.get('/demo', (c) => {
-    const html = nunjucks.render('./pages/demo.njk', { isDev, manifest });
+    const html = nunjucks.render('./pages/demo.njk', { manifest });
     return c.html(html);
   });
   app.get('/documentation', (c) => {
