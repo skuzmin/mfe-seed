@@ -45,7 +45,7 @@ export default defineConfig(({ mode }) => {
         name: 'frontend',
         entry: 'frontend/index.ts',
         formats: ['iife'],
-        fileName: () => 'demo.js',
+        fileName: () => 'index.js',
       },
     },
     plugins: [
