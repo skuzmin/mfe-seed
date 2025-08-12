@@ -15,8 +15,16 @@
     "check": "prettier --ignore-path .gitignore --check src/** --log-level warn",
     "check:fix": "prettier --ignore-path .gitignore --write {src,test}/; eslint --fix src"
   },
-  "devDependencies": {
+  "dependencies": {
+    "hono": "^4.7.10",
     "@hono/node-server": "^1.14.3",
+    "highlight.js": "^11.11.1",
+    "js-yaml": "^4.1.0",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
+    "nunjucks": "^3.2.4"
+  },
+  "devDependencies": {
     "@types/node": "^22.15.21",
     "@types/nunjucks": "^3.2.6",
     "@typescript-eslint/eslint-plugin": "^8.37.0",
@@ -26,15 +34,9 @@
     "eslint": "^9.31.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.3",
-    "highlight.js": "^11.11.1",
-    "hono": "^4.7.10",
     "husky": "^9.1.7",
-    "js-yaml": "^4.1.0",
     "jsdom": "^26.1.0",
-    "markdown-it": "^14.1.0",
-    "markdown-it-anchor": "^9.2.0",
     "npm-run-all2": "^8.0.4",
-    "nunjucks": "^3.2.4",
     "prettier": "^3.6.2",
     "sass-embedded": "^1.89.2",
     "tsx": "^4.20.3",
